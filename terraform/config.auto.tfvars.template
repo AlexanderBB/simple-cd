@@ -1,0 +1,6 @@
+region               = ""
+state_bucket         = ""
+lambda_source_bucket = ""
+artefacts_bucket     = ""
+deployment_role_arn  = ""
+environment_name     = ""

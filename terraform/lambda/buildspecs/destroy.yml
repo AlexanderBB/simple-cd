@@ -1,0 +1,23 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Installing Terraform...
+      - mkdir bin && cd bin
+      - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.9.0/terraform_1.9.0_linux_amd64.zip
+      - unzip terraform.zip
+      - mv terraform /usr/local/bin/
+      - cd ../
+      - echo Loading the deployment variables
+      - eval $(python3 helpers/config_load.py cd/configs/${DEPLOYMENT_ENV}.json)
+      - env|sort
+  build:
+    commands:
+      - cd terraform
+      - echo Initializing Terraform...
+      - echo running terraform init -backend-config="bucket=$STATE_BUCKET" -backend-config="key=${STATE_KEY_OBJECT:-terraform.tfstate}"
+      - terraform init -backend-config="bucket=$STATE_BUCKET" -backend-config="key=${STATE_KEY_OBJECT:-terraform.tfstate}"
+      - echo Destroying Terraform...
+      - terraform destroy -auto-approve
+      - echo Removing the temporary source artefact
+      - aws s3 rm s3://${CODEBUILD_SOURCE_REPO_URL}
