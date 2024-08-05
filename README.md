@@ -26,6 +26,8 @@ project to apply or destroy infrastructure, depending on the event type.
 
 ## Architecture
 
+![img](_img/simple-cd-hld.svg)
+
 The architecture consists of the following components:
 
 1. **S3 Bucket**: Stores the Terraform source code zip files.
@@ -37,8 +39,6 @@ The architecture consists of the following components:
 ## Prerequisites
 
 Before you begin, ensure you have the following:
-
-![img](_img/simple-cd-hld.svg)
 
 1. **AWS Account**: Access to an AWS account with the necessary permissions.
 2. **AWS CLI**: Installed and configured with your AWS credentials.
